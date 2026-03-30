@@ -1,0 +1,328 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "HubSpot CRM API",
+    "description": "API for managing HubSpot CRM contacts and deals via Microsoft 365 Copilot.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Tara AI Solutions",
+      "email": "admin@taraaisolutions.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local development server (replace with ngrok URL during testing)"
+    }
+  ],
+  "paths": {
+    "/api/contacts/create": {
+      "post": {
+        "operationId": "createContact",
+        "summary": "Create a new HubSpot contact",
+        "description": "Creates a new contact record in HubSpot CRM with the provided details.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateContactRequest"
+              },
+              "example": {
+                "firstname": "Jane",
+                "lastname": "Smith",
+                "email": "jane.smith@example.com",
+                "phone": "+1-555-867-5309"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contact created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateContactResponse"
+                },
+                "example": {
+                  "success": true,
+                  "contactId": "12345678",
+                  "message": "Contact created successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request — missing required fields",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error or HubSpot API failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/contacts/{id}": {
+      "patch": {
+        "operationId": "updateContact",
+        "summary": "Update an existing HubSpot contact",
+        "description": "Updates one or more properties on an existing HubSpot contact identified by their contact ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The HubSpot contact ID",
+            "schema": {
+              "type": "string",
+              "example": "12345678"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateContactRequest"
+              },
+              "example": {
+                "email": "new.email@example.com",
+                "jobtitle": "Senior Engineer",
+                "company": "Acme Corp"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contact updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateContactResponse"
+                },
+                "example": {
+                  "success": true,
+                  "message": "Contact updated successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Contact not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error or HubSpot API failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/deals/search": {
+      "get": {
+        "operationId": "searchDeals",
+        "summary": "Search HubSpot deals",
+        "description": "Search for deals in HubSpot CRM by a keyword query. Returns deal name, amount, pipeline stage, and close date.",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "description": "Keyword to search for in deal names and properties",
+            "schema": {
+              "type": "string",
+              "example": "Acme Corp renewal"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results returned successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Deal"
+                  }
+                },
+                "example": [
+                  {
+                    "dealname": "Acme Corp Renewal 2025",
+                    "amount": "15000",
+                    "dealstage": "contractsent",
+                    "closedate": "2025-06-30"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required query parameter",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error or HubSpot API failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateContactRequest": {
+        "type": "object",
+        "required": ["firstname", "lastname", "email"],
+        "properties": {
+          "firstname": {
+            "type": "string",
+            "description": "Contact's first name",
+            "example": "Jane"
+          },
+          "lastname": {
+            "type": "string",
+            "description": "Contact's last name",
+            "example": "Smith"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Contact's email address",
+            "example": "jane.smith@example.com"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Contact's phone number (optional)",
+            "example": "+1-555-867-5309"
+          }
+        }
+      },
+      "CreateContactResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "contactId": {
+            "type": "string",
+            "description": "The newly created HubSpot contact ID"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateContactRequest": {
+        "type": "object",
+        "description": "Any valid HubSpot contact properties to update",
+        "additionalProperties": true,
+        "example": {
+          "email": "updated@example.com",
+          "jobtitle": "VP of Sales",
+          "company": "New Company Inc",
+          "lifecyclestage": "customer"
+        }
+      },
+      "UpdateContactResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "Deal": {
+        "type": "object",
+        "properties": {
+          "dealname": {
+            "type": "string",
+            "description": "Name of the deal",
+            "example": "Acme Corp Renewal 2025"
+          },
+          "amount": {
+            "type": "string",
+            "description": "Deal value as a string",
+            "example": "15000"
+          },
+          "dealstage": {
+            "type": "string",
+            "description": "Current pipeline stage of the deal",
+            "example": "contractsent"
+          },
+          "closedate": {
+            "type": "string",
+            "description": "Expected close date (YYYY-MM-DD)",
+            "example": "2025-06-30"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "message": {
+            "type": "string",
+            "example": "An error occurred"
+          }
+        }
+      }
+    }
+  }
+}

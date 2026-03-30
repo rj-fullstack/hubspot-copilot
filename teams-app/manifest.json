@@ -1,0 +1,43 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.17/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.17",
+  "version": "1.0.0",
+  "id": "3f8b9c2a-7d14-4e56-b891-2c3d4e5f6a7b",
+  "packageName": "com.taraaisolutions.hubspot-copilot",
+  "developer": {
+    "name": "Tara AI Solutions",
+    "websiteUrl": "http://localhost:3000",
+    "privacyUrl": "http://localhost:3000/privacy",
+    "termsOfUseUrl": "http://localhost:3000/terms"
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "name": {
+    "short": "HubSpot CRM",
+    "full": "HubSpot CRM for Microsoft Copilot"
+  },
+  "description": {
+    "short": "Manage HubSpot contacts and deals from Copilot",
+    "full": "Create and update HubSpot CRM contacts and search deals directly from Microsoft 365 Copilot using natural language."
+  },
+  "accentColor": "#FF7A59",
+  "copilotAgents": {
+    "plugins": [
+      {
+        "id": "hubspot-crm-plugin",
+        "file": "ai-plugin.yaml"
+      }
+    ]
+  },
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": [
+    "localhost",
+    "*.ngrok-free.app",
+    "hubspot-copilot.vercel.app"
+  ]
+}

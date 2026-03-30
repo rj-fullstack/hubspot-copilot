@@ -1,0 +1,49 @@
+schema_version: v2.1
+
+# -------------------------------------------------------
+# HubSpot CRM — Microsoft 365 Copilot Plugin Descriptor
+# -------------------------------------------------------
+# auth.type is set to "none" for local development.
+# For production, swap to oauth with Azure AD app registration:
+#   auth:
+#     type: OAuthPluginVault
+#     reference_id: <your-oauth-registration-id>
+# -------------------------------------------------------
+
+name_for_model: hubspot_crm
+name_for_human: HubSpot CRM
+description_for_model: >
+  Plugin for managing HubSpot CRM data. Use this plugin to create new contacts,
+  update existing contact properties, and search for deals by keyword. Always
+  confirm contact details with the user before creating or updating records.
+description_for_human: >
+  Create and update HubSpot contacts and search deals directly from Microsoft 365 Copilot.
+
+contact_email: admin@taraaisolutions.com
+
+auth:
+  type: none
+
+api:
+  type: openapi
+  url: http://localhost:3000/openapi.json
+
+logo_url: http://localhost:3000/color.png
+
+actions:
+  - id: createContact
+    description: >
+      Creates a new contact in HubSpot CRM. Requires at minimum a first name,
+      last name, and email address. Optionally accepts a phone number.
+
+  - id: updateContact
+    description: >
+      Updates properties on an existing HubSpot contact by their contact ID.
+      Can update any valid HubSpot contact property such as email, phone,
+      job title, company, lifecycle stage, etc.
+
+  - id: searchDeals
+    description: >
+      Searches HubSpot deals by a keyword query. Returns deal name, amount,
+      pipeline stage, and expected close date. Use this to look up pipeline
+      status or find specific deals by name or keyword.
