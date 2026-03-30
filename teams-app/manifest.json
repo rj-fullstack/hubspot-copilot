@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/vDevPreview/MicrosoftTeams.schema.json",
   "manifestVersion": "devPreview",
   "version": "1.0.0",
   "id": "3f8b9c2a-7d14-4e56-b891-2c3d4e5f6a7b",
@@ -26,7 +26,7 @@
     "plugins": [
       {
         "id": "hubspot-crm-plugin",
-        "file": "ai-plugin.yaml"
+        "file": "ai-plugin.json"
       }
     ]
   },
