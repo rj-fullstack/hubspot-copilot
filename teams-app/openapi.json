@@ -5,8 +5,8 @@
     "description": "API for managing HubSpot CRM contacts and deals via Microsoft 365 Copilot.",
     "version": "1.0.0",
     "contact": {
-      "name": "Tara AI Solutions",
-      "email": "admin@taraaisolutions.com"
+      "name": "Fullstack Advisory",
+      "email": "admin@fullstackadvisory.com"
     }
   },
   "servers": [

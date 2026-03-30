@@ -15,7 +15,7 @@ description_for_model: >
 description_for_human: >
   Create and update HubSpot contacts and search deals from Microsoft 365 Copilot.
 
-contact_email: admin@taraaisolutions.com
+contact_email: admin@fullstackadvisory.com
 
 auth:
   type: none
