@@ -17,7 +17,7 @@ echo "------------------------------------------------"
 
 # Check required files exist
 MISSING=0
-for f in manifest.json ai-plugin.json color.png outline.png; do
+for f in manifest.json ai-plugin.json openapi.json color.png outline.png; do
   if [ ! -f "$SCRIPT_DIR/$f" ]; then
     echo "  ERROR: Missing required file: $f"
     MISSING=1
@@ -35,7 +35,7 @@ fi
 # Build the zip — prefer native zip, fall back to Python (Windows-friendly)
 cd "$SCRIPT_DIR"
 if command -v zip &> /dev/null; then
-  zip -j "$OUTPUT" manifest.json ai-plugin.json color.png outline.png
+  zip -j "$OUTPUT" manifest.json ai-plugin.json openapi.json color.png outline.png
 elif command -v py &> /dev/null || command -v python &> /dev/null || command -v python3 &> /dev/null; then
   PY=$(command -v py || command -v python3 || command -v python)
   "$PY" -c "
@@ -43,7 +43,7 @@ import zipfile, sys, os
 out = sys.argv[1]
 base = os.path.dirname(out)
 with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as z:
-    for f in ['manifest.json', 'ai-plugin.json', 'color.png', 'outline.png']:
+    for f in ['manifest.json', 'ai-plugin.json', 'openapi.json', 'color.png', 'outline.png']:
         z.write(os.path.join(base, f), f)
 " "$OUTPUT"
 else

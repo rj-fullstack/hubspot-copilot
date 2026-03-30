@@ -25,7 +25,7 @@
         "type": "None"
       },
       "spec": {
-        "url": "https://hubspot-copilot.vercel.app/openapi.json"
+        "url": "openapi.json"
       },
       "run_for_functions": ["createContact", "updateContact", "searchDeals"]
     }
