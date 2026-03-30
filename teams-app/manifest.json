@@ -6,9 +6,9 @@
   "packageName": "com.taraaisolutions.hubspot-copilot",
   "developer": {
     "name": "Tara AI Solutions",
-    "websiteUrl": "http://localhost:3000",
-    "privacyUrl": "http://localhost:3000/privacy",
-    "termsOfUseUrl": "http://localhost:3000/terms"
+    "websiteUrl": "https://hubspot-copilot.vercel.app",
+    "privacyUrl": "https://hubspot-copilot.vercel.app/privacy",
+    "termsOfUseUrl": "https://hubspot-copilot.vercel.app/terms"
   },
   "icons": {
     "color": "color.png",

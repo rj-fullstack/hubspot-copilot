@@ -26,9 +26,9 @@ auth:
 
 api:
   type: openapi
-  url: http://localhost:3000/openapi.json
+  url: https://hubspot-copilot.vercel.app/openapi.json
 
-logo_url: http://localhost:3000/color.png
+logo_url: https://hubspot-copilot.vercel.app/color.png
 
 actions:
   - id: createContact
