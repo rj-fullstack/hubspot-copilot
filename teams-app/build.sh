@@ -32,26 +32,16 @@ fi
 # Remove old zip if it exists
 [ -f "$OUTPUT" ] && rm "$OUTPUT"
 
-# Build the zip — prefer native zip, fall back to Python (Windows-friendly)
+# Build the zip — prefer Node.js (handles LF endings), fall back to native zip
 cd "$SCRIPT_DIR"
-if command -v zip &> /dev/null; then
+if command -v node &> /dev/null; then
+  node build-zip.js
+elif command -v zip &> /dev/null; then
   zip -j "$OUTPUT" manifest.json ai-plugin.json openapi.json color.png outline.png
-elif command -v py &> /dev/null || command -v python &> /dev/null || command -v python3 &> /dev/null; then
-  PY=$(command -v py || command -v python3 || command -v python)
-  "$PY" -c "
-import zipfile, sys, os
-out = sys.argv[1]
-base = os.path.dirname(out)
-with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as z:
-    for f in ['manifest.json', 'ai-plugin.json', 'openapi.json', 'color.png', 'outline.png']:
-        z.write(os.path.join(base, f), f)
-" "$OUTPUT"
 else
   echo ""
-  echo "ERROR: Neither 'zip' nor Python is installed."
-  echo "Install one of:"
-  echo "  zip:    macOS: brew install zip | Ubuntu: sudo apt-get install zip"
-  echo "  Python: https://www.python.org/downloads/"
+  echo "ERROR: Neither 'node' nor 'zip' is installed."
+  echo "Install Node.js from https://nodejs.org"
   echo ""
   exit 1
 fi
